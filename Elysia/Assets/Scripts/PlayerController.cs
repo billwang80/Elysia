@@ -58,19 +58,23 @@ public class PlayerController : MonoBehaviour
         moveInput = Input.GetAxis("Horizontal");
         rigidBody.velocity = new Vector2(moveInput * speed, rigidBody.velocity.y);
     }
+
     private bool isDashed()
     {
         if (!dashing)
         {
-            moveInput = Input.GetAxisRaw("Horizontal");
-            moveInputY = Input.GetAxisRaw("Vertical");
-            if (Input.GetKeyDown(KeyCode.W))
+            if (Input.GetKeyDown(KeyCode.LeftShift))
             {
-                rigidBody.velocity = new Vector2(0, 10);
-                return true; 
+                moveInput = Input.GetAxisRaw("Horizontal");
+                moveInputY = Input.GetAxisRaw("Vertical");
+                if (Input.GetKeyDown(KeyCode.UpArrow))
+                {
+                    rigidBody.velocity = new Vector2(0, 10);
+                    return true;
+                }
+                return false;
             }
-            return false;
         }
-        else { return false; }
+        return false; 
     }
 }
