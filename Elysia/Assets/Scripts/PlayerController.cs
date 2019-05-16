@@ -16,9 +16,13 @@ public class PlayerController : MonoBehaviour
     public float checkRadius;
     public LayerMask whatIsGround;
 
+    private int numberOfDashes;
+    public int extraDashValue;
+
     // Start is called before the first frame update
     void Start()
     {
+        numberOfDashes = extraDashValue;
         rigidBody = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
@@ -26,6 +30,19 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+
+            }
+        }
+
+        if(Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        {
+            rigidBody.velocity = Vector2.up * jumpForce;
+        }
+
         if (moveInput > 0)
             spriteRenderer.flipX = true;
         if (moveInput < 0)
@@ -36,7 +53,7 @@ public class PlayerController : MonoBehaviour
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
 
-        moveInput = Input.GetAxisRaw("Horizontal");
+        moveInput = Input.GetAxis("Horizontal");
         rigidBody.velocity = new Vector2(moveInput * speed, rigidBody.velocity.y);
     }
 }
