@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public float jumpForce;
     private float moveInput;
+    private float moveInputY;
+    public bool dashing = false; 
 
     private Rigidbody2D rigidBody;
     public SpriteRenderer spriteRenderer;
@@ -55,5 +57,20 @@ public class PlayerController : MonoBehaviour
 
         moveInput = Input.GetAxis("Horizontal");
         rigidBody.velocity = new Vector2(moveInput * speed, rigidBody.velocity.y);
+    }
+    private bool isDashed()
+    {
+        if (!dashing)
+        {
+            moveInput = Input.GetAxisRaw("Horizontal");
+            moveInputY = Input.GetAxisRaw("Vertical");
+            if (Input.GetKeyDown(KeyCode.W))
+            {
+                rigidBody.velocity = new Vector2(0, 10);
+                return true; 
+            }
+            return false;
+        }
+        else { return false; }
     }
 }
