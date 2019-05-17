@@ -13,12 +13,7 @@ public class PlayerController : MonoBehaviour
     public float jumpForce;
     private float moveInput;
     private float moveInputY;
-<<<<<<< HEAD
-    public bool dashing = false;
-
-=======
-    public bool dashing = false; 
->>>>>>> 88be844da144c1ff9a3b999c8b9c29b963e083a9
+    
     private Rigidbody2D rigidBody;
 
     // sprites and animations
@@ -41,6 +36,7 @@ public class PlayerController : MonoBehaviour
     // dashing
     private int numberOfDashes;
     public int extraDashValue;
+    public bool dashing = false;
 
     // Start is called before the first frame update
     void Start()
@@ -76,14 +72,12 @@ public class PlayerController : MonoBehaviour
         if (moveInput < 0)
         {
             spriteRenderer.flipX = false;
-<<<<<<< HEAD
-        isDashed();
-=======
             facingRight = false;
         }
 
+        isDashed();
+
         wallMovement();
->>>>>>> 88be844da144c1ff9a3b999c8b9c29b963e083a9
     }
 
     private void FixedUpdate()
@@ -92,7 +86,6 @@ public class PlayerController : MonoBehaviour
 
         moveInput = Input.GetAxis("Horizontal");
         rigidBody.velocity = new Vector2(moveInput * speed, rigidBody.velocity.y);
-        // 
     }
 
     private bool isDashed()
