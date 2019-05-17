@@ -4,26 +4,49 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    // constants
+    private const int DEFAULT_WALL_TIMER = 40;
+    private const int DEFAULT_GRAVITY_SCALE = 15;
+
+    // movement physics
     public float speed;
     public float jumpForce;
     private float moveInput;
     private float moveInputY;
+<<<<<<< HEAD
     public bool dashing = false;
 
+=======
+    public bool dashing = false; 
+>>>>>>> 88be844da144c1ff9a3b999c8b9c29b963e083a9
     private Rigidbody2D rigidBody;
-    public SpriteRenderer spriteRenderer;
 
+    // sprites and animations
+    public SpriteRenderer spriteRenderer;
+    public bool facingRight;
+
+    // ground check
     private bool isGrounded;
     public Transform groundCheck;
     public float checkRadius;
     public LayerMask whatIsGround;
 
+    // wall checks
+    public Transform wallCheckPoint;
+    public bool wallCheck;
+    public LayerMask wallLayerMask;
+    private int wallTimer;
+    private bool canClimb;
+
+    // dashing
     private int numberOfDashes;
     public int extraDashValue;
 
     // Start is called before the first frame update
     void Start()
     {
+        wallTimer = DEFAULT_WALL_TIMER;
+        canClimb = true;
         numberOfDashes = extraDashValue;
         rigidBody = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -46,10 +69,21 @@ public class PlayerController : MonoBehaviour
         }
 
         if (moveInput > 0)
+        {
             spriteRenderer.flipX = true;
+            facingRight = true;
+        }
         if (moveInput < 0)
+        {
             spriteRenderer.flipX = false;
+<<<<<<< HEAD
         isDashed();
+=======
+            facingRight = false;
+        }
+
+        wallMovement();
+>>>>>>> 88be844da144c1ff9a3b999c8b9c29b963e083a9
     }
 
     private void FixedUpdate()
@@ -85,5 +119,25 @@ public class PlayerController : MonoBehaviour
             
         }
         return false;
+    }
+
+    private void wallMovement()
+    {
+        if (!isGrounded)
+        {
+            wallCheck = Physics2D.OverlapCircle(wallCheckPoint.position, 5f, wallLayerMask);
+
+            if (wallCheck)
+            {
+                handleWallSliding();
+            }
+        }
+    }
+
+    private void handleWallSliding()
+    {
+        //rigidBody.gravityScale = 0;
+        rigidBody.velocity = Vector2.zero; // new Vector2(rigidBody.velocity.x, -0.0f);
+        //rigidBody.gravityScale = DEFAULT_GRAVITY_SCALE;
     }
 }
